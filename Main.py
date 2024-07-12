@@ -11,17 +11,61 @@ titleLabel.pack(side=TOP)
 frame2 = Frame(root)
 frame2.pack()
 
+board = {1:" ", 2:" ", 3:" ",
+         4:" ", 5:" ", 6:" ",
+         7:" ", 8:" ", 9:" "}
+
 turn = "X"
+
+def checkForWin(player):
+    #all rows
+    if board[1]==board[2]==board[3] and board[3]==player:
+        return True
+    elif board[4]==board[5]==board[6] and board[6]==player:
+        return True
+    if board[7]==board[8]==board[9] and board[9]==player:
+        return True
+    
+    #all cols
+    if board[1]==board[4]==board[7] and board[7]==player:
+        return True
+    if board[2]==board[5]==board[8] and board[8]==player:
+        return True
+    if board[3]==board[6]==board[9] and board[9]==player:
+        return True
+    
+    #all diagonals
+    if board[1]==board[5]==board[9] and board[9]==player:
+        return True
+    elif board[3]==board[5]==board[7] and board[7]==player:
+        return True
+    return False
 
 def play(event):
     global turn
     button = event.widget
+    buttonNO = str(button)
+    clicked = buttonNO[-1]
+    if clicked=="n":
+        clicked=1
+    else:
+        clicked=int(clicked)
+
+
     if button["text"]==" ": 
         if turn=="X":
             button["text"]="X"
+            board[clicked] = turn
+            if checkForWin(turn): 
+                WinningLabel = Label(frame2, text=f"{turn} wins the game", bg="orange", font=("Arial", 20))
+                WinningLabel.grid(row=3, column=0, columnspan=3)
             turn = "O"
         else:
             button["text"]="O"
+            board[clicked] = turn
+            if checkForWin(turn): 
+                WinningLabel = Label(frame2, text=f"{turn} wins the game", bg="orange", font=("Arial", 20))
+                WinningLabel.grid(row=3, column=0, columnspan=3)
             turn = "X"
 
 #tic tac toe board
