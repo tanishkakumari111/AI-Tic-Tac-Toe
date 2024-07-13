@@ -5,7 +5,7 @@ root.title("Tic Tac Toe")
 
 frame1 = Frame(root)
 frame1.pack()
-titleLabel = Label(frame1, text="Tic Tac Toe", font=("Arial", 30), bg="lightpink")
+titleLabel = Label(frame1, text="Tic Tac Toe", font=("Arial", 30), bg="lightpink", width=20)
 titleLabel.grid(row=0, column=0)
 
 frame2 = Frame(root)
@@ -63,7 +63,7 @@ def play(event):
             button["text"]="X"
             board[clicked] = turn
             if checkForWin(turn): 
-                WinningLabel = Label(frame1, text=f"{turn} wins the game", bg="coral", font=("Arial", 30))
+                WinningLabel = Label(frame1, text=f"{turn} wins the game", bg="orange", font=("Arial", 30), width=20)
                 WinningLabel.grid(row=0, column=0, columnspan=3)
             turn = "O"
 
@@ -71,13 +71,23 @@ def play(event):
             button["text"]="O"
             board[clicked] = turn
             if checkForWin(turn): 
-                WinningLabel = Label(frame1, text=f"{turn} wins the game", bg="orange", font=("Arial", 30))
+                WinningLabel = Label(frame1, text=f"{turn} wins the game", bg="orange", font=("Arial", 30), width=20)
                 WinningLabel.grid(row=0, column=0, columnspan=3)
             turn = "X"
 
         if checkForDraw():
             DrawLabel = Label(frame2, text="Game draw", bg="orange", font=("Arial", 20))
             DrawLabel.grid(row=3, column=0, columnspan=3)
+
+def restartGame():
+    for button in buttons:
+        button["text"] = " "
+
+    for i in board.keys():
+        board[i] = " "
+
+    titleLabel = Label(frame1, text="Tic Tac Toe", font=("Arial", 30), bg="lightpink", width=20)
+    titleLabel.grid(row=0, column=0)
 
 #tic tac toe board
 
@@ -124,8 +134,10 @@ button9.grid(row=2, column=2)
 button9.bind("<Button-1>", play)
 
 
-restartButton = Button(frame2, text="Restart Game", width=12, height=1, font=("Arial", 20), bg="lightgreen", relief=RAISED, border=5)
+restartButton = Button(frame2, text="Restart Game", width=12, height=1, font=("Arial", 20), bg="lightgreen", relief=RAISED, border=5, command=restartGame)
 restartButton.grid(row=4, column=0, columnspan=3)
+
+buttons = [button1, button2, button3, button4, button5, button6, button7, button8, button9]
 
 
 root.mainloop()
